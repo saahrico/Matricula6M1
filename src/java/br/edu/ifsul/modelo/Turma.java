@@ -6,12 +6,17 @@
 package br.edu.ifsul.modelo;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import org.hibernate.validator.constraints.Length;
@@ -45,8 +50,17 @@ public class Turma implements Serializable{
     @Column(name = "sala", nullable = false)
     private int sala;
     
-    //FALTA COLOCAR DISCIPLINA E TAL
-
+    @ManyToMany
+    @JoinTable(name = "grade_curricular",
+            // joinColumn se refere a coluna que armazena o id desta entidade
+            joinColumns = 
+            @JoinColumn(name = "turma", referencedColumnName = "id"),
+            // inverseJoinColumns se refere a coluna que armazena o id 
+            //da entidade do outro lado da relação
+            inverseJoinColumns = 
+            @JoinColumn(name = "disciplina",referencedColumnName = "id"))
+    private List<Disciplinas> grade_curricular = new ArrayList<>();
+    
     public Turma() {
     }
 
@@ -116,5 +130,12 @@ public class Turma implements Serializable{
     public String toString() {
         return "Turma{" + "turno=" + turno + '}';
     }
-   
+
+    public List<Disciplinas> getGrade_curricular() {
+        return grade_curricular;
+    }
+
+    public void setGrade_curricular(List<Disciplinas> grade_curricular) {
+        this.grade_curricular = grade_curricular;
+    }
 }

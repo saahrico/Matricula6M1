@@ -37,4 +37,35 @@ public class Professor extends Pessoa implements Serializable {
     public Professor() {
     }
 
+    public String getCod_professor() {
+        return cod_professor;
+    }
+
+    public void setCod_professor(String cod_professor) {
+        this.cod_professor = cod_professor;
+    }
+
+    public String getCpf() {
+        return cpf;
+    }
+
+    public void setCpf(String cpf) {
+        this.cpf = cpf;
+    }
+
+    public Double getCarga_horaria() {
+        return carga_horaria;
+    }
+
+    public void setCarga_horaria(Double carga_horaria) {
+        this.carga_horaria = carga_horaria;
+    }
+
+    public Boolean getStatus() {
+        return status;
+    }
+
+    public void setStatus(Boolean status) {
+        this.status = status;
+    }
 }
