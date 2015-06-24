@@ -6,6 +6,8 @@
 package br.edu.ifsul.modelo;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -13,6 +15,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
@@ -52,6 +56,17 @@ public class Disciplinas implements Serializable{
     @JoinColumn(name = "professor", referencedColumnName = "id", nullable = false)
     @NotNull(message = "O professor deve ser informado")
     private Professor professor;
+    
+    @ManyToMany
+    @JoinTable(name = "grade_curricular",
+            // joinColumn se refere a coluna que armazena o id desta entidade
+            joinColumns = 
+            @JoinColumn(name = "disciplinas", referencedColumnName = "id"),
+            // inverseJoinColumns se refere a coluna que armazena o id 
+            //da entidade do outro lado da relação
+            inverseJoinColumns = 
+            @JoinColumn(name = "turma",referencedColumnName = "id"))    
+    private List<Turma> grade_curricular = new ArrayList<>();
 
     public Disciplinas() {
     }
@@ -121,5 +136,13 @@ public class Disciplinas implements Serializable{
 
     public void setProfessor(Professor professor) {
         this.professor = professor;
+    }
+
+    public List<Turma> getGrade_curricular() {
+        return grade_curricular;
+    }
+
+    public void setGrade_curricular(List<Turma> grade_curricular) {
+        this.grade_curricular = grade_curricular;
     }
 }
