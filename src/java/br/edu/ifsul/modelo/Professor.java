@@ -33,6 +33,16 @@ public class Professor extends Pessoa implements Serializable {
     @NotNull(message = "O status deve ser informado")
     @Column(name = "status", nullable = false)
     private Boolean status;
+    
+    @NotEmpty(message = "O login deve ser informado")
+    @Length(max = 20, message = "O login não pode ter mais de {max} caracteres")
+    @Column(name = "login", length = 20, nullable = false, unique = true)
+    private String login;
+    
+    @NotEmpty(message = "A senha deve ser informada")
+    @Length(max = 20, message = "A senha não pode ter mais de {max} caracteres")
+    @Column(name = "senha", length = 20, nullable = false)
+    private String senha;
 
     public Professor() {
     }
@@ -67,5 +77,21 @@ public class Professor extends Pessoa implements Serializable {
 
     public void setStatus(Boolean status) {
         this.status = status;
+    }
+
+    public String getLogin() {
+        return login;
+    }
+
+    public void setLogin(String login) {
+        this.login = login;
+    }
+
+    public String getSenha() {
+        return senha;
+    }
+
+    public void setSenha(String senha) {
+        this.senha = senha;
     }
 }

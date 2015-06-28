@@ -18,8 +18,9 @@
                     <p:megaMenu>
                         <p:submenu label="Cadastros">
                             <p:column>
-                                <p:submenu label="Localidade">
-                                    
+                                <p:submenu label="Pessoas">
+                                    <p:menuitem value="Alunos" action="#{controleAluno.listar()}" ajax="false"/>
+                                    <p:menuitem value="Professores" action="#{controleProfessor.listar()}" ajax="false"/>
                                 </p:submenu>
                             </p:column>
                         </p:submenu>
@@ -32,7 +33,8 @@
                 <h:form id="Menu">
                     <p:menu>
                         <p:submenu label="Cadastros">   
-
+                            <p:menuitem value="Alunos" action="#{controleAluno.listar()}" ajax="false"/>
+                            <p:menuitem value="Professores" action="#{controleProfessor.listar()}" ajax="false"/>
                         </p:submenu>
                     </p:menu>
                 </h:form>

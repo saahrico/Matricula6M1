@@ -64,17 +64,7 @@ public abstract class Pessoa implements Serializable {
     @Length(max = 9, message = "O  cep não deve ultrapassar {max} caracteres")
     @Column(name = "cep",length = 9, nullable = false)    
     private String cep;
-    
-    @NotEmpty(message = "O login deve ser informado")
-    @Length(max = 20, message = "O login não pode ter mais de {max} caracteres")
-    @Column(name = "login", length = 20, nullable = false, unique = true)
-    private String login;
-    
-    @NotEmpty(message = "A senha deve ser informada")
-    @Length(max = 20, message = "A senha não pode ter mais de {max} caracteres")
-    @Column(name = "senha", length = 20, nullable = false)
-    private String senha;
-    
+      
     public Pessoa() {
     }
 
@@ -134,22 +124,6 @@ public abstract class Pessoa implements Serializable {
         this.cep = cep;
     }
 
-    public String getLogin() {
-        return login;
-    }
-
-    public void setLogin(String login) {
-        this.login = login;
-    }
-
-    public String getSenha() {
-        return senha;
-    }
-
-    public void setSenha(String senha) {
-        this.senha = senha;
-    }
-   
     @Override
     public int hashCode() {
         int hash = 7;
