@@ -68,7 +68,9 @@
                         <p:outputLabel value="#{obj.nome}"/>
                     </p:column> 
                     <p:column headerText="Nascimento">
-                        <p:outputLabel value="#{obj.nascimento}"/>
+                        <p:outputLabel value="#{obj.nascimento}">
+                            <f:converter converterId="converterCalendar"/>
+                        </p:outputLabel>
                     </p:column> 
                     <p:column headerText="Email">
                         <p:outputLabel value="#{obj.email}"/>

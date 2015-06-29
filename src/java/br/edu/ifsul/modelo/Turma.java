@@ -20,6 +20,7 @@ import javax.persistence.ManyToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import org.hibernate.validator.constraints.Length;
+import org.hibernate.validator.constraints.NotEmpty;
 
 /**
  *
@@ -36,6 +37,11 @@ public class Turma implements Serializable{
             allocationSize = 1)
     @GeneratedValue(generator = "seq_id_produto", strategy = GenerationType.SEQUENCE)
     private Integer id;
+    
+    @NotEmpty(message = "O nome deve ser informado")
+    @Length(max = 50, message = "O  nome não deve ultrapassar {max} caracteres")
+    @Column(name = "nome",length = 50, nullable = false)
+    private String nome;
     
     @Length(max = 10, message = "O turno não deve ultrapassar {max} caracteres")
     @Column(name = "turno",length = 10)        
@@ -126,9 +132,17 @@ public class Turma implements Serializable{
         return true;
     }
 
+    public String getNome() {
+        return nome;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+    
     @Override
     public String toString() {
-        return "Turma{" + "turno=" + turno + '}';
+        return nome;
     }
 
     public List<Disciplinas> getGrade_curricular() {
