@@ -13,7 +13,7 @@
         </h:head>
         <p:layout fullPage="true">
             <p:layoutUnit position="north" header="Sistema de Matrícula com EJB"
-                          style="txt-align: center">
+                          style="txt-align: center"> 
                 <h:form>
                     <p:megaMenu>
                         <p:submenu label="Cadastros">
@@ -22,11 +22,13 @@
                                     <p:menuitem value="Alunos" action="#{controleAluno.listar()}" ajax="false"/>
                                     <p:menuitem value="Professores" action="#{controleProfessor.listar()}" ajax="false"/>
                                     <p:menuitem value="Matricula" action="#{controleMatricula.listar()}" ajax="false"/>
+                                    <p:menuitem value="Disciplina" action="#{controleDisciplina.listar()}" ajax="false"/>
+                                    <p:menuitem value="Turma" action="#{controleTurma.listar()}" ajax="false"/>
                                 </p:submenu>
                             </p:column>
                         </p:submenu>
                     </p:megaMenu>
-                </h:form>              
+                </h:form>      
             </p:layoutUnit>
             <p:layoutUnit position="west" header="Menu"
                           resizable="true" collapsible="true"
@@ -37,6 +39,8 @@
                             <p:menuitem value="Alunos" action="#{controleAluno.listar()}" ajax="false"/>
                             <p:menuitem value="Professores" action="#{controleProfessor.listar()}" ajax="false"/>
                             <p:menuitem value="Matricula" action="#{controleMatricula.listar()}" ajax="false"/>
+                            <p:menuitem value="Disciplina" action="#{controleDisciplina.listar()}" ajax="false"/>
+                            <p:menuitem value="Turma" action="#{controleTurma.listar()}" ajax="false"/>
                         </p:submenu>
                     </p:menu>
                 </h:form>

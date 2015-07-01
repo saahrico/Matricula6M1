@@ -65,7 +65,7 @@ public class Turma implements Serializable{
             //da entidade do outro lado da relação
             inverseJoinColumns = 
             @JoinColumn(name = "disciplina",referencedColumnName = "id"))
-    private List<Disciplinas> grade_curricular = new ArrayList<>();
+    private List<Disciplina> disciplinas = new ArrayList<>();
     
     public Turma() {
     }
@@ -145,11 +145,30 @@ public class Turma implements Serializable{
         return nome;
     }
 
-    public List<Disciplinas> getGrade_curricular() {
-        return grade_curricular;
+    public List<Disciplina> getDisciplinas() {
+        return disciplinas;
     }
 
-    public void setGrade_curricular(List<Disciplinas> grade_curricular) {
-        this.grade_curricular = grade_curricular;
+    public void setDisciplinas(List<Disciplina> disciplinas) {
+        this.disciplinas = disciplinas;
     }
+   
+    public void adicionarDisciplinas(Disciplina obj){
+        if (!this.getDisciplinas().contains(obj)){
+            this.getDisciplinas().add(obj);
+        }
+    }
+    
+    public void removerDisciplinas(Disciplina obj){
+        this.getDisciplinas().remove(obj);
+    }
+   
+    /*
+    public void addItem(Item obj) {
+        this.getItens().add(obj);
+    }
+
+    public void removeItem(Item obj) {
+        this.getItens().remove(obj);
+    }*/
 }

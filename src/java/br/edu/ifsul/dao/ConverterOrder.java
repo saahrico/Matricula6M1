@@ -13,7 +13,7 @@ import javax.faces.convert.Converter;
 
 /**
  *
- * @author Jorge Luis Boeira Bavaresco jlbavaresco@gmail.com
+ * @author Samantha
  */
 public class ConverterOrder implements Serializable, Converter {
 

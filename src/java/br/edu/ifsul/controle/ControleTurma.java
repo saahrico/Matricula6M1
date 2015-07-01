@@ -1,7 +1,9 @@
 package br.edu.ifsul.controle;
 
-import br.edu.ifsul.dao.MatriculaDAO;
-import br.edu.ifsul.modelo.Matricula;
+import br.edu.ifsul.dao.TurmaDAO;
+import br.edu.ifsul.dao.DisciplinaDAO;
+import br.edu.ifsul.modelo.Turma;
+import br.edu.ifsul.modelo.Disciplina;
 import br.edu.ifsul.util.Util;
 import java.io.Serializable;
 import javax.ejb.EJB;
@@ -12,14 +14,15 @@ import javax.faces.bean.ViewScoped;
  *
  * @author Samantha
  */
-
 @ManagedBean(name = "controleTurma")
 @ViewScoped
 public class ControleTurma implements Serializable {
 
     @EJB
-    private MatriculaDAO<Matricula> dao;
-    private Matricula objeto;
+    private TurmaDAO dao;
+    private Turma objeto;
+    private Disciplina disciplina;
+    private DisciplinaDAO daoDisciplina;
 
     public ControleTurma() {
 
@@ -30,7 +33,7 @@ public class ControleTurma implements Serializable {
     }
 
     public void novo() {
-        objeto = new Matricula();
+        objeto = new Turma();
     }
 
     public void salvar() {
@@ -63,21 +66,46 @@ public class ControleTurma implements Serializable {
             Util.mensagemErro("Erro ao remover objeto: "+e.getMessage());
         }
     }
-
-
-    public Matricula getObjeto() {
-        return objeto;
+    
+    public void adicionarDisciplina(){
+        objeto.adicionarDisciplinas(disciplina);
+        Util.mensagemInformacao("Disciplina adicionada com sucesso");
+    }
+    
+    public void removerDisciplina(Disciplina obj){
+        objeto.removerDisciplinas(obj);
+        Util.mensagemInformacao("Disciplina removida com sucesso");
     }
 
-    public void setObjeto(Matricula objeto) {
-        this.objeto = objeto;
-    }
-
-    public MatriculaDAO<Matricula> getDao() {
+    public TurmaDAO getDao() {
         return dao;
     }
 
-    public void setDao(MatriculaDAO<Matricula> dao) {
+    public void setDao(TurmaDAO dao) {
         this.dao = dao;
+    }
+
+    public Turma getObjeto() {
+        return objeto;
+    }
+
+    public void setObjeto(Turma objeto) {
+        this.objeto = objeto;
+    }
+
+    public Disciplina getDisciplina() {
+        return disciplina;
+    }
+
+    public void setDisciplina(Disciplina disciplina) {
+        this.disciplina = disciplina;
+    }
+
+    public DisciplinaDAO getDaoDisciplina() {
+        return daoDisciplina;
+    }
+
+    public void setDaoDisciplina(DisciplinaDAO daoDisciplina) {
+        this.daoDisciplina = daoDisciplina;
     }
 }

@@ -12,8 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 
 /**
  *
- * @author Jorge Luis Boeira Bavaresco
- * jorge.bavaresco@passofundo.ifsul.edu.br
+ * @author Samantha
  */
 @ManagedBean(name = "controleLogin")
 @SessionScoped

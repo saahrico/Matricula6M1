@@ -7,7 +7,7 @@ import javax.persistence.Query;
 
 /**
  *
- * @author Jorge Luis Boeira Bavaresco jorge.bavaresco@passofundo.ifsul.edu.br
+ * @author Samantha
  */
 @Stateful
 public class ProfessorDAO<T> extends GenericDAO<Professor> implements Serializable {

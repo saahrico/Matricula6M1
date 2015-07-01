@@ -7,6 +7,7 @@ package teste;
  */
 
 import br.edu.ifsul.modelo.Aluno;
+import br.edu.ifsul.modelo.Disciplina;
 import br.edu.ifsul.modelo.Matricula;
 import br.edu.ifsul.modelo.Professor;
 import br.edu.ifsul.modelo.Turma;
@@ -23,12 +24,12 @@ import org.junit.Test;
  *
  * @author Samantha
  */
-public class TesteInserirMatricula {
+public class TesteInserirTurma {
     
     EntityManagerFactory emf;
     EntityManager em ;
     
-    public TesteInserirMatricula() {
+    public TesteInserirTurma() {
     }
     
     @Before
@@ -47,16 +48,20 @@ public class TesteInserirMatricula {
         boolean exception = false ;
         try{
 
-            Matricula mat = new Matricula();
-            mat.setNum_matricula(1111);
-            mat.setData(Calendar.getInstance());
-            mat.setAluno(em.find(Aluno.class, 16));
-            mat.setTurma(em.find(Turma.class, 1));
-            mat.setComplemento("Matricula de tal aluno");
-            mat.setStatus(true);
+           /*  Turma tur = new Turma();
+            tur.setNome("3M1");
+            tur.setTurno("noite");
+            tur.setAno(2015);
+            tur.setTotal_vagas(40);
+            tur.setSala(44)*/
+            
+            Turma obj = em.find(Turma.class,20);
+            Disciplina dis = em.find(Disciplina.class,19);
+            obj.adicionarDisciplinas(dis);
                        
             em.getTransaction().begin();
-            em.persist(mat);
+            //em.persist(tur);
+            em.persist(obj);
             em.getTransaction().commit();
             
         }catch(Exception e){

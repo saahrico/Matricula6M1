@@ -6,7 +6,7 @@
       xmlns:p="http://primefaces.org/ui"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
     <ui:composition template="/templates/template.xhtml">
-        <ui:define name="titulo">Cadastro de Matriculas</ui:define>
+        <ui:define name="titulo">Cadastro de Disciplinas</ui:define>
         <ui:define name="conteudo">
             <h:form id="formListagem">
                 <p:messages/>
@@ -19,84 +19,76 @@
                             Filtro Ordenação e Paginação 
                         </f:facet>                          
                         <p:column  colspan="13" rowspan="1">     
-                            <p:commandButton actionListener="#{controleMatricula.novo()}"
+                            <p:commandButton actionListener="#{controleDisciplina.novo()}"
                                              value="Novo" oncomplete="PF('dlg').show();"
                                              update=":formEdicao" icon="ui-icon-plus"/>                                                        
                             <h:outputLabel for="ordem" value="Ordem" />     
                             <h:selectOneMenu id="ordem" 
-                                             value="#{controleMatricula.dao.currentOrder}"
-                                             converter="#{controleMatricula.dao.converterOrder}">
-                                <f:selectItems value="#{controleMatricula.dao.listOrder}" />
+                                             value="#{controleDisciplina.dao.currentOrder}"
+                                             converter="#{controleDisciplina.dao.converterOrder}">
+                                <f:selectItems value="#{controleDisciplina.dao.listOrder}" />
                                 <p:ajax update="formListagem" 
-                                        listener="#{controleMatricula.listar()}"/>
+                                        listener="#{controleDisciplina.listar()}"/>
                             </h:selectOneMenu>                            
                             <h:outputLabel for="maximoObjetos" value="Máximo de objetos" />
                             <p:inputText id="maximoObjetos"  
-                                         value="#{controleMatricula.dao.maxObjects}" size="2"
+                                         value="#{controleDisciplina.dao.maxObjects}" size="2"
                                          onkeydown="Mascara(this, Integer);"
                                          onkeypress="Mascara(this, Integer);"
                                          onkeyup="Mascara(this, Integer);">
                                 <p:ajax update="tabela"
-                                        listener="#{controleMatricula.listar()}" event="keyup"/>                          
+                                        listener="#{controleDisciplina.listar()}" event="keyup"/>                          
                             </p:inputText>                      
                             <h:outputLabel for="filtro" value="Filtro" />
                             <p:inputText id="filtro" placeholder="Digite o filtro"
-                                         value="#{controleMatricula.dao.filter}" >
+                                         value="#{controleDisciplina.dao.filter}" >
                                 <p:ajax update="tabela" 
-                                        listener="#{controleMatricula.listar()}" event="keyup"/>                            
+                                        listener="#{controleDisciplina.listar()}" event="keyup"/>                            
                             </p:inputText>
                             <p:commandButton id="btnFiltrar" update="formListagem" 
-                                             actionListener="#{controleMatricula.listar()}" icon="ui-icon-search" />  
+                                             actionListener="#{controleDisciplina.listar()}" icon="ui-icon-search" />  
                             <p:commandButton id="btnPrimeiro" update="formListagem" 
-                                             actionListener="#{controleMatricula.dao.first()}" icon="ui-icon-seek-start"/>  
+                                             actionListener="#{controleDisciplina.dao.first()}" icon="ui-icon-seek-start"/>  
                             <p:commandButton id="btnAnterior" update="formListagem" 
-                                             actionListener="#{controleMatricula.dao.previous()}" icon="ui-icon-seek-prev"/>  
+                                             actionListener="#{controleDisciplina.dao.previous()}" icon="ui-icon-seek-prev"/>  
                             <p:commandButton  id="btnProximo" update="formListagem" 
-                                              actionListener="#{controleMatricula.dao.next()}" icon="ui-icon-seek-next"/>  
+                                              actionListener="#{controleDisciplina.dao.next()}" icon="ui-icon-seek-next"/>  
                             <p:commandButton id="btnUltimo" update="formListagem" 
-                                             actionListener="#{controleMatricula.dao.last()}" icon="ui-icon-seek-end" /> 
+                                             actionListener="#{controleDisciplina.dao.last()}" icon="ui-icon-seek-end" /> 
                         </p:column>  
                     </p:panelGrid>                     
                 </div>  
-                <p:dataTable value="#{controleMatricula.dao.listObjects}"
+                <p:dataTable value="#{controleDisciplina.dao.listObjects}"
                              var="obj" id="tabela"
                              emptyMessage="Nenhum registro encontrado">
                     <p:column headerText="ID">
                         <p:outputLabel value="#{obj.id}"/>
                     </p:column>
-                    <p:column headerText="Numero de Matricula">
-                        <p:outputLabel value="#{obj.num_matricula}"/>
+                    <p:column headerText="Nome">
+                        <p:outputLabel value="#{obj.nome}"/>
                     </p:column> 
-                    <p:column headerText="Data">
-                        <p:outputLabel value="#{obj.data}">
-                            <f:converter converterId="converterCalendar"/>
-                        </p:outputLabel>
+                    <p:column headerText="Carga_horaria">
+                        <p:outputLabel value="#{obj.carga_horaria}"/>
                     </p:column> 
-                    <p:column headerText="Status">
-                        <p:outputLabel value="#{obj.status}"/>
-                    </p:column>  
-                    <p:column headerText="Complemento">
-                        <p:outputLabel value="#{obj.complemento}"/>
+                    <p:column headerText="Descricao">
+                        <p:outputLabel value="#{obj.descricao}"/>
                     </p:column> 
-                    <p:column headerText="Aluno">
-                        <p:outputLabel value="#{obj.aluno.nome}"/>
-                    </p:column>
-                    <p:column headerText="Turma">
-                        <p:outputLabel value="#{obj.turma.nome}"/>
+                    <p:column headerText="Professor">
+                        <p:outputLabel value="#{obj.professor.nome}"/>
                     </p:column> 
                     <p:column headerText="Ações"> 
                         <div align="center">
-                            <p:commandButton actionListener="#{controleMatricula.editar(obj.id)}"
+                            <p:commandButton actionListener="#{controleDisciplina.editar(obj.id)}"
                                              oncomplete="PF('dlg').show();" 
                                              update=":formEdicao" icon="ui-icon-pencil"/>
-                            <p:commandButton actionListener="#{controleMatricula.remover(obj.id)}"
+                            <p:commandButton actionListener="#{controleDisciplina.remover(obj.id)}"
                                              update=":formListagem" icon="ui-icon-trash"
-                                             onclick="if (!confirm('Confirma a exclusão da matrícula #{obj.num_matricula}?'))
+                                             onclick="if (!confirm('Confirma a exclusão da disciplina #{obj.nome}?'))
                                                          return false"/>
                         </div>
                     </p:column> 
                     <f:facet name="footer">  
-                        <h:outputLabel value="#{controleMatricula.dao.navigationMessage}" />
+                        <h:outputLabel value="#{controleDisciplina.dao.navigationMessage}" />
                     </f:facet>                     
                 </p:dataTable>
 
@@ -113,45 +105,30 @@
                                 <p:commandButton
                                     value="Salvar"
                                     update=":formListagem :formEdicao"
-                                    actionListener="#{controleMatricula.salvar()}"                                
+                                    actionListener="#{controleDisciplina.salvar()}"                                
                                     oncomplete="if(!args.validationFailed){PF('dlg').hide();}"
                                     icon="ui-icon-disk"
                                     />
                             </div>
                         </f:facet>
                         <p:outputLabel value="ID" for="txtId"/>
-                        <p:inputText value="#{controleMatricula.objeto.id}" id="txtId"
+                        <p:inputText value="#{controleDisciplina.objeto.id}" id="txtId"
                                      size="10" maxlength="10" readonly="true"/>
-                        <p:outputLabel value="Numero de Matricula" for="txtNumMatricula"/>
-                        <p:inputText value="#{controleMatricula.objeto.num_matricula}"
-                                     id="txtNumMatricula" size="10" maxlength="10"/>
-                        <p:outputLabel value="Data" for="txtData"/>
-                        <p:calendar value="#{controleMatricula.objeto.data}"
-                                    id="txtData" pattern="dd/MM/yyyy"
-                                    mask="true" locale="pt_BR">
-                            <f:converter converterId="converterCalendar"/>
-                        </p:calendar>
-                        <h:outputLabel value="Status" for="txtStatus"/>
-                        <h:selectBooleanCheckbox value="#{controleMatricula.objeto.status}"
-                                                 id="txtStatus"/>
-                        <p:outputLabel value="Complemento" for="txtComplemento"/>
-                        <p:inputText value="#{controleMatricula.objeto.complemento}"
-                                     id="txtComplemento" size="50" maxlength="50"/>
-                        <p:outputLabel value="Aluno" for="txtAluno"/>
-                        <p:selectOneMenu value="#{controleMatricula.objeto.aluno}" id="txtAluno">
-                            <f:converter converterId="converterAluno"/>
+                        <p:outputLabel value="Nome" for="txtNome"/>
+                        <p:inputText value="#{controleDisciplina.objeto.nome}"
+                                     id="txtNome" size="50" maxlength="50"/>
+                        <p:outputLabel value="Carga Horaria" for="txtCargaHoraria"/>
+                        <p:inputText value="#{controleDisciplina.objeto.carga_horaria}" id="txtCargaHoraria"
+                                     size="50" maxlength="50"/>
+                        <p:outputLabel value="Descricao" for="txtDescricao"/>
+                        <p:inputText value="#{controleDisciplina.objeto.descricao}"
+                                     id="txtDescricao" size="50" maxlength="50"/>
+                        <p:outputLabel value="Professor" for="txtProfessor"/>
+                        <p:selectOneMenu value="#{controleDisciplina.objeto.professor}" id="txtProfessor">
+                            <f:converter converterId="converterProfessor"/>
                             <f:selectItem noSelectionOption="true"
                                           itemLabel="Selecione um registro"/>
-                            <f:selectItems value="#{controleAluno.dao.listAll}"
-                                           var="e"
-                                           itemLabel="#{e.nome}"/>
-                        </p:selectOneMenu>
-                        <p:outputLabel value="Turma" for="txtTurma"/>
-                        <p:selectOneMenu value="#{controleMatricula.objeto.turma}" id="txtTurma">
-                            <f:converter converterId="converterTurma"/>
-                            <f:selectItem noSelectionOption="true"
-                                          itemLabel="Selecione um registro"/>
-                            <f:selectItems value="#{controleTurma.dao.listAll}"
+                            <f:selectItems value="#{controleProfessor.dao.listAll}"
                                            var="e"
                                            itemLabel="#{e.nome}"/>
                         </p:selectOneMenu>

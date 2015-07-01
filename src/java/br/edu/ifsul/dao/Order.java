@@ -9,7 +9,7 @@ import java.io.Serializable;
 
 /**
  *
- * @author Jorge Luis Boeira Bavaresco jlbavaresco@gmail.com
+ * @author Samantha
  */
 public class Order implements Serializable {
 

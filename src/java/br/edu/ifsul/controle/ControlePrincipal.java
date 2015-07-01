@@ -6,8 +6,7 @@ import javax.faces.bean.RequestScoped;
 
 /**
  *
- * @author Jorge Luis Boeira Bavaresco
- * jorge.bavaresco@passofundo.ifsul.edu.br
+ * @author Samantha
  */
 @ManagedBean(name = "controlePrincipal")
 @RequestScoped

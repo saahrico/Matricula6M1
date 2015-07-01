@@ -14,7 +14,7 @@ import javax.persistence.PersistenceContext;
 
 /**
  *
- * @author Jorge Luis Boeira Bavaresco jlbavaresco@gmail.com
+ * @author Samantha
  */
 public class GenericDAO<T> implements Serializable {
 

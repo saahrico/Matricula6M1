@@ -1,0 +1,167 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <ui:composition template="/templates/template.xhtml">
+        <ui:define name="titulo">Cadastro de Turmas</ui:define>
+        <ui:define name="conteudo">
+            <div align="center">
+                <h:form id="formListagem">
+                    <p:messages/>
+                    <p:growl/>
+                    <div align="center">
+                        <p:panelGrid columns="1">
+                            <f:facet name="header">  
+                                Filtro Ordenação e Paginação 
+                            </f:facet>                          
+                            <p:column  colspan="13" rowspan="1">     
+                                <p:commandButton actionListener="#{controleTurma.novo()}"
+                                                 value="Novo" oncomplete="PF('dlg').show();"
+                                                 update=":formEdicao" icon="ui-icon-plus"/>                                                        
+                                <h:outputLabel for="ordem" value="Ordem" />     
+                                <h:selectOneMenu id="ordem" 
+                                                 value="#{controleTurma.dao.currentOrder}"
+                                                 converter="#{controleTurma.dao.converterOrder}">
+                                    <f:selectItems value="#{controleTurma.dao.listOrder}" />
+                                    <p:ajax update="formListagem" 
+                                            listener="#{controleTurma.listar()}"/>
+                                </h:selectOneMenu>                            
+                                <h:outputLabel for="maximoObjetos" value="Máximo de objetos" />
+                                <p:inputText id="maximoObjetos"  
+                                             value="#{controleTurma.dao.maxObjects}" size="2"
+                                             onkeydown="Mascara(this, Integer);"
+                                             onkeypress="Mascara(this, Integer);"
+                                             onkeyup="Mascara(this, Integer);">
+                                    <p:ajax update="tabela"
+                                            listener="#{controleTurma.listar()}" event="keyup"/>                          
+                                </p:inputText>                      
+                                <h:outputLabel for="filtro" value="Filtro" />
+                                <p:inputText id="filtro" placeholder="Digite o filtro"
+                                             value="#{controleTurma.dao.filter}" >
+                                    <p:ajax update="tabela" 
+                                            listener="#{controleTurma.listar()}" event="keyup"/>                            
+                                </p:inputText>
+                                <p:commandButton id="btnFiltrar" update="formListagem" 
+                                                 actionListener="#{controleTurma.listar()}" icon="ui-icon-search" />  
+                                <p:commandButton id="btnPrimeiro" update="formListagem" 
+                                                 actionListener="#{controleTurma.dao.first()}" icon="ui-icon-seek-start"/>  
+                                <p:commandButton id="btnAnterior" update="formListagem" 
+                                                 actionListener="#{controleTurma.dao.previous()}" icon="ui-icon-seek-prev"/>  
+                                <p:commandButton  id="btnProximo" update="formListagem" 
+                                                  actionListener="#{controleTurma.dao.next()}" icon="ui-icon-seek-next"/>  
+                                <p:commandButton id="btnUltimo" update="formListagem" 
+                                                 actionListener="#{controleTurma.dao.last()}" icon="ui-icon-seek-end" /> 
+                            </p:column> 
+                            <f:facet name="footer">  
+                                <h:outputLabel value="#{controleTurma.dao.navigationMessage}" />
+                            </f:facet>      
+                        </p:panelGrid>                     
+                    </div>  
+                    <p:dataTable value="#{controleTurma.dao.listObjects}" var="obj" emptyMessage="Nenhum dado encontrado" id="tabela">
+                        <p:column headerText="ID">
+                            <p:outputLabel value="#{obj.id}"/>
+                        </p:column>
+                        <p:column headerText="Nome">
+                            <p:outputLabel value="#{obj.nome}"/>
+                        </p:column> 
+                        <p:column headerText="Turno">
+                            <p:outputLabel value="#{obj.turno}"/>
+                        </p:column>
+                        <p:column headerText="Ano">
+                            <p:outputLabel value="#{obj.ano}"/>
+                        </p:column>
+                        <p:column headerText="Total de Vagas">
+                            <p:outputLabel value="#{obj.total_vagas}"/>
+                        </p:column>
+                        <p:column headerText="Sala">
+                            <p:outputLabel value="#{obj.sala}"/>
+                        </p:column>
+                        <p:column headerText="Açoes">
+                            <div align="center">
+                                <p:commandButton update=":formEdicao" 
+                                                 actionListener="#{controleTurma.editar(obj.id)}" 
+                                                 oncomplete="{PF('dlg').show();}"
+                                                 icon="ui-icon-pencil"/>
+                                <p:commandButton update=":formListagem" 
+                                                 actionListener="#{controleTurma.remover(obj.id)}" 
+                                                 onclick="if (!confirm('Confirma a exclusão da turma #{obj.nome}?'))
+                                                             return false"
+                                                 icon="ui-icon-trash"/>
+                            </div>
+                        </p:column>
+                    </p:dataTable>
+                </h:form>
+            </div>
+        </ui:define>
+        <ui:define name="dialogos">
+            <p:dialog header="Edição" widgetVar="dlg" resizable="false" modal="true" >
+                <h:form id="formEdicao">
+                    <p:tabView id="tab" effect="scale" effectDuration="normal">
+                        <p:tab title="Dados Principais" titletip="Dados Principais">
+                            <p:growl id="growlFormEdicao"/>
+                            <p:panelGrid columns="2">
+                                <f:facet name="footer">
+                                    <div align="center">
+                                        <p:commandButton value="Salvar" update=":formListagem:tabela :formEdicao" 
+                                                         actionListener="#{controleTurma.salvar()}" 
+                                                         oncomplete="if(!args.validationFailed){PF('dlg').hide();}"
+                                                         icon="ui-icon-disk"/>
+                                    </div>
+                                </f:facet>
+                                <p:outputLabel value="ID" for="txtId"/>
+                                <p:inputText value="#{controleTurma.objeto.id}" id="txtId"
+                                             size="10" maxlength="10" readonly="true"/>
+                                <p:outputLabel value="Nome" for="txtNome"/>
+                                <p:inputText value="#{controleTurma.objeto.nome}"
+                                             id="txtNome" size="50" maxlength="50"/>
+                                <p:outputLabel value="Turno" for="txtTurno"/>
+                                <p:inputText value="#{controleTurma.objeto.turno}"
+                                             id="txtTurno" size="50" maxlength="50"/>
+                                <p:outputLabel value="Ano" for="txtAno"/>
+                                <p:inputText value="#{controleTurma.objeto.ano}"
+                                             id="txtAno" size="20" maxlength="20"/> 
+                                <p:outputLabel value="Total de Vagas" for="txtVagas"/>
+                                <p:inputText id="txtVagas" value="#{controleTurma.objeto.total_vagas}"/>
+                                <p:outputLabel value="Sala" for="txtSala"/>
+                                <p:inputText value="#{controleTurma.objeto.sala}"
+                                             id="txtSala" />
+                            </p:panelGrid>
+                        </p:tab>
+                        <p:tab title="Disciplinas" titletip="Disciplinas">
+                            <div align="center">
+                                <p:panelGrid columns="3">
+                                    <p:outputLabel value="Disciplina"/>
+                                    <p:selectOneMenu value="#{controleTurma.disciplina}" id="selectDisciplina">
+                                        <f:converter converterId="converterDisciplina"/>
+                                        <f:selectItems value="#{controleDisciplina.dao.listAll}" var="p" itemLabel="#{p.nome}"/>
+                                    </p:selectOneMenu>
+                                    <p:commandButton 
+                                        actionListener="#{controleTurma.adicionarDisciplina()}"
+                                        update="listaDisciplinas growlFormEdicao" 
+                                        icon="ui-icon-plus" id="btnNovaDisciplina"
+                                        process="btnNovaDisciplina selectDisciplina"/>
+                                </p:panelGrid>    
+                            </div>                            
+                            <p:dataTable value="#{controleTurma.objeto.disciplinas}" var="disciplinas" id="listaDisciplinas">
+                                <p:column headerText="Disciplinas">
+                                    <p:outputLabel value="#{disciplinas.nome}"/>                                    
+                                </p:column> 
+                                <p:column headerText="Ações">
+                                    <div align="center">
+                                        <p:commandButton icon="ui-icon-trash"
+                                                         actionListener="#{controleTurma.removerDisciplina(disciplinas)}"
+                                                         process="btnRemoverDisciplina" id="btnRemoverDisciplina"
+                                                         update="listaDisciplinas "/>
+                                    </div>
+                                </p:column>                            
+                            </p:dataTable>
+                        </p:tab>
+                    </p:tabView>
+                </h:form>
+            </p:dialog> 
+        </ui:define>
+    </ui:composition>
+    </html>

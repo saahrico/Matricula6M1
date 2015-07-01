@@ -30,8 +30,8 @@ import org.hibernate.validator.constraints.NotEmpty;
  */
 
 @Entity
-@Table(name = "disciplinas")
-public class Disciplinas implements Serializable{
+@Table(name = "disciplina")
+public class Disciplina implements Serializable{
     
     @Id
     @Column(name = "id")
@@ -61,14 +61,14 @@ public class Disciplinas implements Serializable{
     @JoinTable(name = "grade_curricular",
             // joinColumn se refere a coluna que armazena o id desta entidade
             joinColumns = 
-            @JoinColumn(name = "disciplinas", referencedColumnName = "id"),
+            @JoinColumn(name = "disciplina", referencedColumnName = "id"),
             // inverseJoinColumns se refere a coluna que armazena o id 
             //da entidade do outro lado da relação
             inverseJoinColumns = 
             @JoinColumn(name = "turma",referencedColumnName = "id"))    
-    private List<Turma> grade_curricular = new ArrayList<>();
-
-    public Disciplinas() {
+    private List<Turma> turma = new ArrayList<>();
+       
+    public Disciplina() {
     }
 
     public Integer getId() {
@@ -118,7 +118,7 @@ public class Disciplinas implements Serializable{
         if (getClass() != obj.getClass()) {
             return false;
         }
-        final Disciplinas other = (Disciplinas) obj;
+        final Disciplina other = (Disciplina) obj;
         if (!Objects.equals(this.id, other.id)) {
             return false;
         }
@@ -138,11 +138,11 @@ public class Disciplinas implements Serializable{
         this.professor = professor;
     }
 
-    public List<Turma> getGrade_curricular() {
-        return grade_curricular;
+    public List<Turma> getTurma() {
+        return turma;
     }
 
-    public void setGrade_curricular(List<Turma> grade_curricular) {
-        this.grade_curricular = grade_curricular;
+    public void setTurma(List<Turma> turma) {
+        this.turma = turma;
     }
 }

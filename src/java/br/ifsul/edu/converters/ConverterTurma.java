@@ -11,8 +11,7 @@ import javax.persistence.PersistenceContext;
 
 /**
  *
- * @author Jorge Luis Boeira Bavaresco
- * jorge.bavaresco@passofundo.ifsul.edu.br
+ * @author Samantha
  */
 @FacesConverter(value = "converterTurma")
 public class ConverterTurma implements Serializable, Converter {

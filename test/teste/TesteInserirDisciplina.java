@@ -6,11 +6,9 @@ package teste;
  * and open the template in the editor.
  */
 
-import br.edu.ifsul.modelo.Aluno;
-import br.edu.ifsul.modelo.Matricula;
+import br.edu.ifsul.modelo.Disciplina;
 import br.edu.ifsul.modelo.Professor;
 import br.edu.ifsul.modelo.Turma;
-import java.util.Calendar;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
@@ -23,12 +21,12 @@ import org.junit.Test;
  *
  * @author Samantha
  */
-public class TesteInserirMatricula {
+public class TesteInserirDisciplina {
     
     EntityManagerFactory emf;
     EntityManager em ;
     
-    public TesteInserirMatricula() {
+    public TesteInserirDisciplina() {
     }
     
     @Before
@@ -47,16 +45,14 @@ public class TesteInserirMatricula {
         boolean exception = false ;
         try{
 
-            Matricula mat = new Matricula();
-            mat.setNum_matricula(1111);
-            mat.setData(Calendar.getInstance());
-            mat.setAluno(em.find(Aluno.class, 16));
-            mat.setTurma(em.find(Turma.class, 1));
-            mat.setComplemento("Matricula de tal aluno");
-            mat.setStatus(true);
+            Disciplina dis = new Disciplina();
+            dis.setCarga_horaria(10.0);
+            dis.setDescricao("tal");
+            dis.setNome("Geografia");
+            dis.setProfessor(em.find(Professor.class, 19));
                        
             em.getTransaction().begin();
-            em.persist(mat);
+            em.persist(dis);
             em.getTransaction().commit();
             
         }catch(Exception e){
